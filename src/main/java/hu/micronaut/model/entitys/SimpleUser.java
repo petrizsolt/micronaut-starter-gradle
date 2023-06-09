@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,4 +28,16 @@ public class SimpleUser {
     private LocalDate birthDate;
 
     private LocalDateTime creationTime;
+
+    private LocalDateTime modifyDate;
+
+    @PrePersist
+    public void autoSetCreationDateOnInsert() {
+        this.creationTime = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void autoSetModifyDateOnUpdate() {
+        this.modifyDate = LocalDateTime.now();
+    }
 }

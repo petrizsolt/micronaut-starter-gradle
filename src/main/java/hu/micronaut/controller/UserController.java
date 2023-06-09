@@ -39,4 +39,9 @@ public class UserController {
 	public SimpleUser saveUser(@Body SaveSimpleUserReq req) {
 		return userService.saveUser(req);
 	}
+
+	@Post(uri = "/update-user/{userId}", produces = MediaType.APPLICATION_JSON)
+	public SimpleUser modifyUser(@Body SaveSimpleUserReq req, @PathVariable(name = "userId") Long userId) {
+		return userService.modifyUser(req, userId);
+	}
 }

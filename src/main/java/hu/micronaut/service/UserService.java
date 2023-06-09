@@ -10,7 +10,10 @@ import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Singleton
@@ -23,9 +26,18 @@ public class UserService {
         return simpleUserRepository.findAll(pageable);
     }
 
+    @Transactional
     public SimpleUser saveUser(SaveSimpleUserReq req) {
         SimpleUser user = Mapper.map(req, SimpleUser.class);
-        user.setCreationTime(LocalDateTime.now());
+        return simpleUserRepository.save(user);
+    }
+
+    @Transactional
+    public SimpleUser modifyUser(SaveSimpleUserReq req, Long userId) {
+        SimpleUser user = findById(userId);
+
+        user = Mapper.map(req, user);
+
         return simpleUserRepository.save(user);
     }
 
