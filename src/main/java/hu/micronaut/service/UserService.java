@@ -1,6 +1,7 @@
 package hu.micronaut.service;
 
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import hu.micronaut.exceptions.exception.UserNotFoundException;
 import hu.micronaut.model.dto.SaveSimpleUserReq;
 import hu.micronaut.model.entitys.SimpleUser;
@@ -30,6 +31,8 @@ public class UserService {
     @Transactional
     public SimpleUser saveUser(SaveSimpleUserReq req) {
         SimpleUser user = Mapper.map(req, SimpleUser.class);
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, req.getPassword().toCharArray());
+        user.setPassword(bcryptHashString);
         return simpleUserRepository.save(user);
     }
 

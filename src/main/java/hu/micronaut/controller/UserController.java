@@ -1,5 +1,8 @@
 package hu.micronaut.controller;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.nimbusds.jose.crypto.PasswordBasedDecrypter;
+import com.nimbusds.jose.crypto.PasswordBasedEncrypter;
 import hu.micronaut.exceptions.ApiExceptionResponse;
 import hu.micronaut.model.dto.SaveSimpleUserReq;
 import hu.micronaut.model.entitys.SimpleUser;
@@ -10,18 +13,25 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
+import io.micronaut.security.authentication.UsernamePasswordCredentials;
+import io.micronaut.validation.Validated;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.Valid;
+import java.security.KeyStore;
 import java.util.List;
+
 
 @Controller("/api/user")
 @RequiredArgsConstructor
 public class UserController {
 
 	private final UserService userService;
+
+
 
 	@Get(uri = "/get-by-id/{id}", produces = MediaType.APPLICATION_JSON)
 	public SimpleUser getUsers(@PathVariable(name = "id") Long id) {
@@ -52,7 +62,7 @@ public class UserController {
 
 	@Status(HttpStatus.CREATED)
 	@Post(uri = "/save-user", produces = MediaType.APPLICATION_JSON)
-	public SimpleUser saveUser(@Body SaveSimpleUserReq req) {
+	public SimpleUser saveUser(@Body @Valid SaveSimpleUserReq req) {
 		return userService.saveUser(req);
 	}
 

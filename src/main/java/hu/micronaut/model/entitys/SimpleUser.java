@@ -25,6 +25,11 @@ public class SimpleUser {
 
     private String name;
 
+    @Column(unique = true)
+    private String username;
+
+    private String password;
+
     private LocalDate birthDate;
 
     private LocalDateTime creationTime;
