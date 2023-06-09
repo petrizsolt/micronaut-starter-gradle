@@ -8,13 +8,14 @@ import hu.micronaut.repository.SimpleUserRepository;
 import hu.micronaut.utility.Mapper;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import java.util.List;
 
 @Singleton
 @RequiredArgsConstructor
@@ -49,5 +50,22 @@ public class UserService {
     public void deleteById(Long id) {
         SimpleUser usr = findById(id);
         simpleUserRepository.delete(usr);
+    }
+
+    public HttpResponse<List<SimpleUser>> deleteByName(String name) {
+        List<SimpleUser> usersFound = simpleUserRepository.findAllByName(name);
+
+        if(usersFound.isEmpty()) {
+            throw new UserNotFoundException("No user found with name: " + name);
+        }
+
+        if(usersFound.size() > 1) {
+            return HttpResponse
+                    .status(HttpStatus.MULTIPLE_CHOICES)
+                    .body(usersFound);
+        }
+
+        simpleUserRepository.delete(usersFound.get(0));
+        return HttpResponse.ok(usersFound);
     }
 }

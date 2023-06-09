@@ -1,17 +1,23 @@
 package hu.micronaut.controller;
 
+import hu.micronaut.exceptions.ApiExceptionResponse;
 import hu.micronaut.model.dto.SaveSimpleUserReq;
 import hu.micronaut.model.entitys.SimpleUser;
 import hu.micronaut.service.UserService;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 
-@Controller("/api")
+@Controller("/api/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -32,6 +38,16 @@ public class UserController {
 	@Delete(uri = "/delete-by-id/{id}", produces = MediaType.APPLICATION_JSON)
 	public void deleteUser(@PathVariable(name = "id") Long id) {
 		userService.deleteById(id);
+	}
+
+
+	@ApiResponse(responseCode = "300",
+			description = "Multiple user found with the supplied 'name'. Returns a list of users found.")
+	@ApiResponse(responseCode = "200",
+			description = "Exactly found a user with supplied name. Successfully deleted them.")
+	@Delete(uri = "/delete-by-name/{name}", produces = MediaType.APPLICATION_JSON)
+	public HttpResponse<List<SimpleUser>> deleteByName(@PathVariable(name = "name") String name) {
+		return userService.deleteByName(name);
 	}
 
 	@Status(HttpStatus.CREATED)
