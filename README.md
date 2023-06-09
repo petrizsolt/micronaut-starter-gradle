@@ -1,3 +1,5 @@
+Swagger: http://localhost:8080/swagger-ui
+
 ## Micronaut 3.9.3 Documentation
 
 - [User Guide](https://docs.micronaut.io/3.9.3/guide/index.html)
