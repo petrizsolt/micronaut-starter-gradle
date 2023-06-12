@@ -10,12 +10,13 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.Valid;
 import java.util.List;
 
-
+@Tag(name = "Users controller")
 @Controller("/api/user")
 @RequiredArgsConstructor
 public class UserController {

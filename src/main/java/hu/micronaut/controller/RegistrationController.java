@@ -11,10 +11,11 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Status;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.Valid;
-
+@Tag(name = "Signup controller")
 @Controller("/api/signup")
 @Secured(SecurityRule.IS_ANONYMOUS)
 @RequiredArgsConstructor
