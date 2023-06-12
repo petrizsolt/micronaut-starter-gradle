@@ -11,11 +11,13 @@ import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
+
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
 
 @Singleton
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class UserService {
     private final SimpleUserRepository simpleUserRepository;
 
     public Page<SimpleUser> getAllUsers(Pageable pageable) {
+
         return simpleUserRepository.findAll(pageable);
     }
 

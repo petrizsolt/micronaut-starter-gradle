@@ -49,11 +49,7 @@ public class UserController {
 		return userService.deleteByName(name);
 	}
 
-	@Status(HttpStatus.CREATED)
-	@Post(uri = "/save-user", produces = MediaType.APPLICATION_JSON)
-	public SimpleUser saveUser(@Body @Valid SaveSimpleUserReq req) {
-		return userService.saveUser(req);
-	}
+
 
 	@Post(uri = "/update-user/{userId}", produces = MediaType.APPLICATION_JSON)
 	public SimpleUser modifyUser(@Body SaveSimpleUserReq req, @PathVariable(name = "userId") Long userId) {

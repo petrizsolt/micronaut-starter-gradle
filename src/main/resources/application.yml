@@ -1,6 +1,15 @@
 micronaut:
   application:
     name: gradleStarter
+  security:
+    enabled: true
+    interceptUrlMap:
+      - pattern: /swagger/**
+        access:
+          - isAnonymous()
+      - pattern: /swagger-ui/**
+        access:
+          - isAnonymous()
 netty:
   default:
     allocator:
