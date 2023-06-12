@@ -4,7 +4,6 @@ package hu.micronaut.utility;
 import io.micronaut.data.exceptions.MappingException;
 import lombok.experimental.UtilityClass;
 import org.modelmapper.Conditions;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 

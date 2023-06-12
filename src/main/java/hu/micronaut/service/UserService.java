@@ -15,7 +15,6 @@ import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 
 @Singleton

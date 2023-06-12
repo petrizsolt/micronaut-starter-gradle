@@ -1,6 +1,5 @@
 package hu.micronaut.exceptions.exception;
 
-import io.micronaut.http.annotation.Get;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
