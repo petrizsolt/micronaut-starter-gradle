@@ -3,6 +3,9 @@ micronaut:
     name: gradleStarter
   security:
     enabled: true
+    basic-auth:
+      enabled: false
+    authentication: bearer
     interceptUrlMap:
       - pattern: /swagger/**
         access:
@@ -10,6 +13,14 @@ micronaut:
       - pattern: /swagger-ui/**
         access:
           - isAnonymous()
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: 'r6GXSOMvVzhc2FqGsbvxfLW6uhUtT4zy'
+            validation:
+              secret: 'r6GXSOMvVzhc2FqGsbvxfLW6uhUtT4zy'
 netty:
   default:
     allocator:

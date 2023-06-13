@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Data
@@ -32,6 +33,9 @@ public class SimpleUser {
     private LocalDateTime creationTime;
 
     private LocalDateTime modifyDate;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<UserRoles> roles;
 
     @PrePersist
     public void autoSetCreationDateOnInsert() {

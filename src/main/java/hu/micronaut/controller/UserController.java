@@ -1,24 +1,29 @@
 package hu.micronaut.controller;
 
+import hu.micronaut.model.dto.ModifyUserRoleReq;
 import hu.micronaut.model.dto.SaveSimpleUserReq;
 import hu.micronaut.model.entitys.SimpleUser;
+import hu.micronaut.model.entitys.UserRoles;
+import hu.micronaut.security.RoleCodes;
 import hu.micronaut.service.UserService;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpResponse;
-import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
+import io.micronaut.security.annotation.Secured;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-import javax.validation.Valid;
 import java.util.List;
+
+import static io.micronaut.security.rules.SecurityRule.IS_AUTHENTICATED;
 
 @Tag(name = "Users controller")
 @Controller("/api/user")
 @RequiredArgsConstructor
+@Secured(IS_AUTHENTICATED)
 public class UserController {
 
 	private final UserService userService;
@@ -50,10 +55,19 @@ public class UserController {
 		return userService.deleteByName(name);
 	}
 
-
-
-	@Post(uri = "/update-user/{userId}", produces = MediaType.APPLICATION_JSON)
+	@Put(uri = "/update-user/{userId}", produces = MediaType.APPLICATION_JSON)
 	public SimpleUser modifyUser(@Body SaveSimpleUserReq req, @PathVariable(name = "userId") Long userId) {
 		return userService.modifyUser(req, userId);
+	}
+
+	@Get(uri = "/get-all-roles", produces = MediaType.APPLICATION_JSON)
+	public List<UserRoles> getRoles() {
+		return userService.getAllRoles();
+	}
+
+	@Secured(RoleCodes.ADMIN)
+	@Put(uri = "/change-user-roles")
+	public SimpleUser changeUserRoles(@Body ModifyUserRoleReq req) {
+		return userService.changeUserRoles(req);
 	}
 }

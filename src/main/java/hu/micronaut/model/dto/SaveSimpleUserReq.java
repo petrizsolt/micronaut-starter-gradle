@@ -1,9 +1,11 @@
 package hu.micronaut.model.dto;
 
 import io.micronaut.core.annotation.Introspected;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
@@ -12,16 +14,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Introspected
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SaveSimpleUserReq {
 
     @NotBlank(message = "Name field is required!")
-    private String name;
+    String name;
 
-    private LocalDate birthDate;
+    LocalDate birthDate;
 
     @NotBlank(message = "Username is required!")
-    private String username;
+    String username;
 
     @NotBlank(message = "Password is required!")
-    private String password;
+    String password;
 }
