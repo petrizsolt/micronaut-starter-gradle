@@ -43,7 +43,8 @@ public class AuthProvider implements AuthenticationProvider {
                 .getRoles().stream().map(r -> r.getRoleCode()).toList();
 
         if(passIsCorrect) {
-            return Flowable.just(AuthenticationResponse.success(username, userRoleCodes));
+            return Flowable.just(AuthenticationResponse
+                    .success(String.valueOf(userOpt.get().getId()), userRoleCodes));
         }
 
         return Flowable.just(new AuthenticationFailed("Wrong username or password!"));

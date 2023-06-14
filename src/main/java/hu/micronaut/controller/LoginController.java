@@ -1,5 +1,6 @@
 package hu.micronaut.controller;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
@@ -13,4 +14,5 @@ public interface LoginController {
 
     @Post("login")
     BearerAccessRefreshToken login(@Body UsernamePasswordCredentials credentials);
+
 }
